@@ -1,0 +1,10 @@
+torch
+torchvision
+numpy
+matplotlib
+Pillow
+OpenEXR
+onnx==1.12.0
+onnx-pytorch==0.1.5
+onnx2torch==1.5.3
+onnxruntime==1.12.1
