@@ -22,7 +22,7 @@ FGSM_attack.ipynb
 
 Run the rectification notebook:  
 
-Open the Jupyter Notebook **`PGD-based_rectification.ipynb`** and run the cells step-by-step to perform the attack:
+Open the Jupyter Notebook **`PGD-based_rectification.ipynb`** and run the cells step-by-step to perform the rectification:
 
 ```
 PGD-based_rectification.ipynb
@@ -85,10 +85,10 @@ See `python3 test.py --h` for list of optional arguments, or `examples/test.sh` 
 
 ## Results
 
-MNIST model was trained on an NVIDIA GeForce RTX 3090.
+Our model was trained on an NVIDIA GeForce RTX 3090.
 
-<center><img src="figure/MNIST_result.png" width="500"></center>
-<center><img src="figure/LivDet_result.png" width="500"></center>
+<img src="figure/Group.png">
+
 
 
 ## References
