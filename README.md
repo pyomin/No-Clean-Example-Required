@@ -22,7 +22,7 @@ FGSM_attack.ipynb
 
 Run the rectification notebook:  
 
-Open the Jupyter Notebook **`PGD-based_rectification.ipynb`** and run the cells step-by-step to perform the attack:
+Open the Jupyter Notebook **`PGD-based_rectification.ipynb`** and run the cells step-by-step to perform the rectification:
 
 ```
 PGD-based_rectification.ipynb
