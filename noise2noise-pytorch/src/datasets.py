@@ -73,7 +73,7 @@ class AbstractDataset(Dataset):
         assert w >= self.crop_size and h >= self.crop_size, \
             f'Error: Crop size: {self.crop_size}, Image size: ({w}, {h})'
         cropped_imgs = []
-        ########################## train 주석 o , test 주석 x ###################################
+
         i = np.random.randint(0, h - self.crop_size + 1)
         j = np.random.randint(0, w - self.crop_size + 1)
 
@@ -82,8 +82,7 @@ class AbstractDataset(Dataset):
             if min(w, h) < self.crop_size:
                     img = tvF.resize(img, (self.crop_size, self.crop_size))
             cropped_imgs.append(tvF.crop(img, i, j, self.crop_size, self.crop_size))
-            ########################학습 crop############################
-            #cropped_imgs.append(tvF.crop(img, 0, 581-self.crop_size, self.crop_size, self.crop_size))
+
              
 
         return cropped_imgs
@@ -135,8 +134,7 @@ class NoisyDataset(AbstractDataset):
         
       
         if self.noise_type == 'adv':
-            
-            #noise_img = img.resize((500, 500))
+
             noise_img = img
            
 
@@ -231,21 +229,14 @@ class NoisyDataset(AbstractDataset):
         im_name = list(im_name)
         im_name.reverse()
         im_name = ''.join(im_name)
-#   #################################################################################test 주석###################################################      
-#         new_path = '/hdd1/PM/PGD/CWAttack/dep_0.003/'                   
-#        # print(new_path+im_name)
-#         new_img = Image.open(new_path+im_name).convert('RGB')
-#         #new_img = new_img.resize((500, 500))
-#        # new_img = tvF.crop(new_img, 0, 581-self.crop_size, self.crop_size, self.crop_size)
 
+################################################## Using Corrupted and Rectified Images
 
-###################################################요기가 msnit 주석
-
-#         new_path = '/hdd1/PM/Self2Self/noise2noise/noise2noise-pytorch/data/ECCV/PGD_0.3_depoisoning/'
-#        # print(new_path+im_name)
-#         new_img = Image.open(new_path+im_name).convert('RGB')
+        new_path = '../../Dataset/Rectified/'
+       # print(new_path+im_name)
+        new_img = Image.open(new_path+im_name).convert('RGB')
         
-  #################################################################################test 주석###################################################        
+################################################################
         # Random square crop
         if self.crop_size != 0:
             img = self._random_crop([img])[0]

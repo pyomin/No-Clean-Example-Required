@@ -12,27 +12,25 @@ class UNet(nn.Module):
         """Initializes U-Net."""
 
         super(UNet, self).__init__()
-#######################################################################block1 코드 수정함###############
-#        # Layers: enc_conv0, enc_conv1, pool1
-#         self._block1 = nn.Sequential(
-#             nn.Conv2d(in_channels, 48, 3, stride=1, padding=1),
-#             nn.ReLU(inplace=True),
-#             #nn.Conv2d(48, 48, 3, padding=1),
-#             nn.Conv2d(48, 48, 3, stride=1, padding=1),
-#             nn.ReLU(inplace=True),
-#             #nn.MaxPool2d(2))
-#             nn.MaxPool2d(1))
-
-#################################################################################여기 위에가 28x28 사이즈 이미지
+       # Layers: enc_conv0, enc_conv1, pool1
         self._block1 = nn.Sequential(
             nn.Conv2d(in_channels, 48, 3, stride=1, padding=1),
             nn.ReLU(inplace=True),
-            nn.Conv2d(48, 48, 3, padding=1),
-            #nn.Conv2d(48, 48, 3, stride=1, padding=1),
+            #nn.Conv2d(48, 48, 3, padding=1),
+            nn.Conv2d(48, 48, 3, stride=1, padding=1),
             nn.ReLU(inplace=True),
-            nn.MaxPool2d(2))
-            #nn.MaxPool2d(1))
-############################################################################################이 위 주석부터 여기가 지문이미지
+            #nn.MaxPool2d(2))
+            nn.MaxPool2d(1))
+
+        # self._block1 = nn.Sequential(
+        #     nn.Conv2d(in_channels, 48, 3, stride=1, padding=1),
+        #     nn.ReLU(inplace=True),
+        #     nn.Conv2d(48, 48, 3, padding=1),
+        #     #nn.Conv2d(48, 48, 3, stride=1, padding=1),
+        #     nn.ReLU(inplace=True),
+        #     nn.MaxPool2d(2))
+        #     #nn.MaxPool2d(1))
+
         # Layers: enc_conv(i), pool(i); i=2..5
         self._block2 = nn.Sequential(
             nn.Conv2d(48, 48, 3, stride=1, padding=1),
@@ -107,38 +105,26 @@ class UNet(nn.Module):
 #         concat2 = torch.cat((upsample2, pool1), dim=1)
 #         upsample1 = self._block5(concat2)
 #         concat1 = torch.cat((upsample1, x), dim=1)
-################################이전버전####################
-#         # Decoder
-        #print("pool5 size:", pool5.size())
+
+
         upsample5 = self._block3(pool5)
         upsample5 = torch.nn.functional.interpolate(upsample5, size=pool4.size()[2:], mode='nearest')
-        #print("upsample5 size:", upsample5.size())
-        #print("pool4 size:", pool4.size())
         concat5 = torch.cat((upsample5, pool4), dim=1)
-               
+
         upsample4 = self._block4(concat5)
-#        upsample4 = torch.nn.functional.interpolate(upsample4, size=pool3.size()[2:], mode='nearest')### 이 코드가 26x28
-        
-        ###################
-        #print("upsample4 size:", upsample4.size())
-        #print("pool3 size:", pool3.size())
-        
+        upsample4 = torch.nn.functional.interpolate(upsample4, size=pool3.size()[2:], mode='nearest') # 28x28
         concat4 = torch.cat((upsample4, pool3), dim=1)
-        
-        
-        
+
         upsample3 = self._block5(concat4)
         upsample3 = torch.nn.functional.interpolate(upsample3, size=pool2.size()[2:], mode='nearest')
-        
-       # print("upsample3 size:", upsample3.size())
-       # print("pool2 size:", pool2.size())
-        
         concat3 = torch.cat((upsample3, pool2), dim=1)
+
         upsample2 = self._block5(concat3)
         concat2 = torch.cat((upsample2, pool1), dim=1)
+
         upsample1 = self._block5(concat2)
         upsample1 = torch.nn.functional.interpolate(upsample1, size=x.size()[2:], mode='nearest')
         concat1 = torch.cat((upsample1, x), dim=1)
-################################이전버전####################
+
         # Final activation
         return self._block6(concat1)
